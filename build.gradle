@@ -4,7 +4,7 @@ plugins {
 }
 
 allprojects {
-    group 'dev.peri.yetanothermessageslibrary'
+    group 'org.mythicprojects.yetanothermessageslibrary'
     version '7.0.0-SNAPSHOT'
 
     apply plugin: 'java-library'
@@ -47,9 +47,9 @@ subprojects {
                 from components.java
 
                 pom {
-                    url = "https://github.com/P3ridot/YetAnotherMessagesLibrary"
+                    url = "https://github.com/Mythic-Projects/YetAnotherMessagesLibrary"
                     name = project.name
-                    description = "YetAnotherMessagesLibrary is simple Miecraft Messages Library based on `adventure`. It allows to easily send messages to players with built-in support for localization and placeholders."
+                    description = "YetAnotherMessagesLibrary is simple Minecraft Messages Library based on `adventure`. It allows to easily send messages to players with built-in support for localization and placeholders."
 
                     developers {
                         developer {
@@ -60,9 +60,9 @@ subprojects {
                     }
 
                     scm {
-                        url = "https://github.com/P3ridot/YetAnotherMessagesLibrary.git"
-                        connection = "git@github.com:P3ridot/YetAnotherMessagesLibrary.git"
-                        developerConnection = "git@github.com:P3ridot/YetAnotherMessagesLibrary.git"
+                        url = "https://github.com/Mythic-Projects/YetAnotherMessagesLibrary.git"
+                        connection = "git@github.com:Mythic-Projects/YetAnotherMessagesLibrary.git"
+                        developerConnection = "git@github.com:Mythic-Projects/YetAnotherMessagesLibrary.git"
                     }
 
                     licenses {
@@ -93,8 +93,8 @@ subprojects {
 
         repositories {
             maven {
-                name "titanvale-repo"
-                url "https://repo.titanvale.net/${version.toString().endsWith('SNAPSHOT') ? 'snapshots' : 'releases'}"
+                name "mythic"
+                url "https://repo.mythicprojects.org/${version.toString().endsWith('SNAPSHOT') ? 'snapshots' : 'releases'}"
 
                 credentials {
                     username = System.getenv("MAVEN_NAME")

@@ -18,9 +18,9 @@ dependencies {
 
     // YetAnotherMessagesLibrary
     def yamlVersion = "7.0.0-SNAPSHOT"
-    implementation "dev.peri.yetanothermessageslibrary:core:${yamlVersion}"
-    implementation "dev.peri.yetanothermessageslibrary:platform-bukkit:${yamlVersion}"
-    implementation "dev.peri.yetanothermessageslibrary:repository-okaeri:${yamlVersion}"
+    implementation "org.mythicprojects.yetanothermessageslibrary:core:${yamlVersion}"
+    implementation "org.mythicprojects.yetanothermessageslibrary:platform-bukkit:${yamlVersion}"
+    implementation "org.mythicprojects.yetanothermessageslibrary:repository-okaeri:${yamlVersion}"
 
     // Adventure
     def adventureVersion = "4.14.0"
@@ -34,5 +34,5 @@ dependencies {
 
 shadowJar {
     mergeServiceFiles()
-    relocate("net.kyori", "dev.peri.yetanothermessageslibrary.example.kyori") // Relocation of adventure is required while using `adventure-platform` -> otherwise title/actionbar/bossbar will not display on Paper servers
+    relocate("net.kyori", "org.mythicprojects.yetanothermessageslibrary.example.kyori") // Relocation of adventure is required while using `adventure-platform` -> otherwise title/actionbar/bossbar will not display on Paper servers
 }
