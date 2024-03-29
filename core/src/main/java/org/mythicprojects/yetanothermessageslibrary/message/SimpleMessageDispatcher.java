@@ -95,7 +95,7 @@ public class SimpleMessageDispatcher<RECEIVER, DISPATCHER extends SimpleMessageD
 
     @Contract("_, _, _ -> this")
     public <T extends RECEIVER> DISPATCHER with(
-            @NotNull Class<T> requiredType,
+            @Nullable Class<T> requiredType,
             @NotNull TriFunction<@NotNull T, @NotNull Locale, @NotNull Map<@NotNull String, @Nullable Object>, ? extends @NotNull Replaceable> replacementSupplier,
             @Nullable TriFunction<@NotNull RECEIVER, @NotNull Locale, @NotNull Map<@NotNull String, @Nullable Object>, ? extends @NotNull Replaceable> fallbackSupplier
     ) {
@@ -137,13 +137,11 @@ public class SimpleMessageDispatcher<RECEIVER, DISPATCHER extends SimpleMessageD
         List<Replaceable> replacement = new ArrayList<>(this.replacements);
         this.replacementSuppliers
                 .stream()
-                .map(supplier -> {
-                    return supplier.supplyReplacement(
-                            supplier.getEntityType().cast(receiver),
-                            locale,
-                            this.fields
-                    );
-                })
+                .map(supplier -> supplier.supplyReplacement(
+                        receiver,
+                        locale,
+                        this.fields
+                ))
                 .filter(Objects::nonNull)
                 .forEachOrdered(replacement::add);
         return replacement;
@@ -156,7 +154,7 @@ public class SimpleMessageDispatcher<RECEIVER, DISPATCHER extends SimpleMessageD
         private final TriFunction<@NotNull RECEIVER, @NotNull Locale, @NotNull Map<@NotNull String, @Nullable Object>, ? extends @NotNull Replaceable> fallbackSupplier;
 
         private ReplaceableSupplier(
-                @NotNull Class<T> entityType,
+                @Nullable Class<T> entityType,
                 @NotNull TriFunction<@NotNull T, @NotNull Locale, @NotNull Map<@NotNull String, @Nullable Object>, ? extends @NotNull Replaceable> supplier,
                 @Nullable TriFunction<@NotNull RECEIVER, @NotNull Locale, @NotNull Map<@NotNull String, @Nullable Object>, ? extends @NotNull Replaceable> fallbackSupplier
         ) {
@@ -165,19 +163,18 @@ public class SimpleMessageDispatcher<RECEIVER, DISPATCHER extends SimpleMessageD
             this.fallbackSupplier = fallbackSupplier;
         }
 
-        public @NotNull Class<T> getEntityType() {
-            return this.entityType;
-        }
-
         public @Nullable Replaceable supplyReplacement(@NotNull RECEIVER receiver, @NotNull Locale locale, @NotNull Map<@NotNull String, @Nullable Object> fields) {
-            if (this.entityType.isInstance(receiver)) {
-                return this.supplier.apply(this.entityType.cast(receiver), locale, fields);
+            boolean needCast = this.entityType != null;
+            if (needCast && !this.entityType.isInstance(receiver)) {
+                return this.fallbackSupplier != null
+                        ? this.fallbackSupplier.apply(receiver, locale, fields)
+                        : null;
             }
 
-            if (this.fallbackSupplier == null) {
-                return null;
-            }
-            return this.fallbackSupplier.apply(receiver, locale, fields);
+            T entity = needCast
+                    ? this.entityType.cast(receiver)
+                    : (T) receiver;
+            return this.supplier.apply(entity, locale, fields);
         }
 
     }

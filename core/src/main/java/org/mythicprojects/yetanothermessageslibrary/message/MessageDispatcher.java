@@ -99,7 +99,7 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
      * @return this dispatcher
      */
     @Contract("_, _ -> this")
-    default <T extends DISPATCHER> DISPATCHER predicate(@NotNull Class<T> receiverClass, @NotNull Predicate<T> predicate) {
+    default <T extends RECEIVER> DISPATCHER predicate(@NotNull Class<T> receiverClass, @NotNull Predicate<T> predicate) {
         return this.predicate(receiver -> {
             if (!receiverClass.isInstance(receiver)) {
                 return false;
@@ -190,14 +190,14 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     @Contract("_, _, _ -> this")
     <T extends RECEIVER> DISPATCHER with(
-            @NotNull Class<T> requiredType,
+            @Nullable Class<T> requiredType,
             @NotNull TriFunction<@NotNull T, @NotNull Locale, @NotNull Map<@NotNull String, @Nullable Object>, ? extends @NotNull Replaceable> replacementSupplier,
             @Nullable TriFunction<@NotNull RECEIVER, @NotNull Locale, @NotNull Map<@NotNull String, @Nullable Object>, ? extends @NotNull Replaceable> fallbackSupplier
     );
 
     @Contract("_, _ -> this")
     default <T extends RECEIVER> DISPATCHER with(
-            @NotNull Class<T> requiredType,
+            @Nullable Class<T> requiredType,
             @NotNull TriFunction<@NotNull T, @NotNull Locale, @NotNull Map<@NotNull String, @Nullable Object>, ? extends @NotNull Replaceable> replacementSupplier
     ) {
         return this.with(requiredType, replacementSupplier, null);
@@ -205,7 +205,7 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     @Contract("_, _, _ -> this")
     default <T extends RECEIVER> DISPATCHER with(
-            @NotNull Class<T> requiredType,
+            @Nullable Class<T> requiredType,
             @NotNull Function<@NotNull T, ? extends @NotNull Replaceable> replacementSupplier,
             @Nullable Function<@NotNull RECEIVER, ? extends @NotNull Replaceable> fallbackSupplier
     ) {
@@ -220,7 +220,7 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     @Contract("_, _ -> this")
     default <T extends RECEIVER> DISPATCHER with(
-            @NotNull Class<T> requiredType,
+            @Nullable Class<T> requiredType,
             @NotNull Function<@NotNull T, ? extends @NotNull Replaceable> replacementSupplier
     ) {
         return this.with(requiredType, replacementSupplier, null);
@@ -228,7 +228,7 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     @Contract("_, _ -> this")
     default <T extends RECEIVER> DISPATCHER with(
-            @NotNull Class<T> requiredType,
+            @Nullable Class<T> requiredType,
             @NotNull Collection<Function<@NotNull T, ? extends @NotNull Replaceable>> replacementSuppliers
     ) {
         replacementSuppliers.forEach(replacementSupplier -> this.with(requiredType, replacementSupplier));
