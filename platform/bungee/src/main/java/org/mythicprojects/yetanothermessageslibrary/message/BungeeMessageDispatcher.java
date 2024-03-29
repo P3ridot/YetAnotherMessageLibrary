@@ -9,7 +9,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.mythicprojects.yetanothermessageslibrary.viewer.ViewerService;
 
-public class BungeeMessageDispatcher<D extends BungeeMessageDispatcher<?>> extends MessageDispatcher<CommandSender, D> {
+@SuppressWarnings("unchecked")
+public class BungeeMessageDispatcher<DISPATCHER extends BungeeMessageDispatcher<DISPATCHER>>
+        extends SimpleMessageDispatcher<CommandSender, DISPATCHER> {
 
     public BungeeMessageDispatcher(
             @NotNull ViewerService<CommandSender> viewerService,
@@ -20,28 +22,21 @@ public class BungeeMessageDispatcher<D extends BungeeMessageDispatcher<?>> exten
     }
 
     @Contract(" -> this")
-    public D broadcast() {
-        this.broadcastPlayers();
-        this.console();
-        return (D) this;
-    }
-
-    @Contract(" -> this")
-    public D broadcastPlayers() {
+    public DISPATCHER allPlayers() {
         this.receivers(ProxyServer.getInstance().getPlayers());
-        return (D) this;
+        return (DISPATCHER) this;
     }
 
     @Contract(" -> this")
-    public D console() {
+    public DISPATCHER console() {
         this.receiver(ProxyServer.getInstance().getConsole());
-        return (D) this;
+        return (DISPATCHER) this;
     }
 
     @Contract("_ -> this")
-    public D permission(@NotNull String permission) {
+    public DISPATCHER permission(@NotNull String permission) {
         this.predicate(sender -> sender.hasPermission(permission));
-        return (D) this;
+        return (DISPATCHER) this;
     }
 
 }
