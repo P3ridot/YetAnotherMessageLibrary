@@ -14,9 +14,9 @@ import org.mythicprojects.yetanothermessageslibrary.config.serdes.holder.TitleHo
 
 public class YAMLSerdes implements OkaeriSerdesPack {
 
-    private final ComponentSerializer<Component, Component, String> componentSerializer;
+    private final ComponentSerializer<Component, ? extends Component, String> componentSerializer;
 
-    public YAMLSerdes(@NotNull ComponentSerializer<Component, Component, String> componentSerializer) {
+    public YAMLSerdes(@NotNull ComponentSerializer<Component, ? extends Component, String> componentSerializer) {
         this.componentSerializer = componentSerializer;
     }
 
@@ -35,7 +35,7 @@ public class YAMLSerdes implements OkaeriSerdesPack {
         registry.register(new SendableMessageSerializer());
 
         // Utilities
-        registry.register(new ComponentTransformer(componentSerializer));
+        registry.register(new ComponentTransformer(this.componentSerializer));
         registry.register(new KeyTransformer());
     }
 

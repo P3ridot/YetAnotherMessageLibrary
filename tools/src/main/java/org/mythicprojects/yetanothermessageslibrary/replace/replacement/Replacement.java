@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.TextReplacementConfig;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.mythicprojects.yetanothermessageslibrary.replace.Replaceable;
@@ -36,6 +37,7 @@ public abstract class Replacement implements Replaceable {
         return this.placeholderType.newReplacementBuilder(this.placeholder);
     }
 
+    @ApiStatus.Internal
     public final @NotNull Object getPlaceholder() {
         return this.placeholder;
     }

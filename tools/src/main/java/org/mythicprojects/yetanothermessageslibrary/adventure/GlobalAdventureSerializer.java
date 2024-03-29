@@ -18,7 +18,7 @@ import org.mythicprojects.yetanothermessageslibrary.replace.replacement.SimpleSt
  */
 public final class GlobalAdventureSerializer {
 
-    private static ComponentSerializer<? extends Component, ? extends Component, String> GLOBAL_SERIALIZER = new ComponentSerializer<Component, Component, String>() {
+    private static ComponentSerializer<Component, ? extends Component, String> GLOBAL_SERIALIZER = new ComponentSerializer<Component, Component, String>() {
         @Override
         public @NotNull Component deserialize(@NotNull String input) {
             return Component.text(input);
@@ -29,9 +29,6 @@ public final class GlobalAdventureSerializer {
             throw new UnsupportedOperationException("Register global serializer to serialize components");
         }
     };
-
-    private static final boolean IS_NATIVE_LEGACY_SERIALIZER;
-    private static final boolean IS_NATIVE_MINIMESSAGE_SERIALIZER;
 
     private GlobalAdventureSerializer() {
     }
@@ -52,29 +49,19 @@ public final class GlobalAdventureSerializer {
         } catch (ClassNotFoundException ignored) {
         }
 
-        IS_NATIVE_LEGACY_SERIALIZER = isNativeLegacySerializer;
-        IS_NATIVE_MINIMESSAGE_SERIALIZER = isNativeMiniMessageSerializer;
-
-        if (IS_NATIVE_LEGACY_SERIALIZER && IS_NATIVE_MINIMESSAGE_SERIALIZER) {
-            NativeMiniMessageLegacySerializer.init();
-        } else if (IS_NATIVE_LEGACY_SERIALIZER) {
+        if (isNativeLegacySerializer) {
             NativeLegacySerializer.init();
-        } else if (IS_NATIVE_MINIMESSAGE_SERIALIZER) {
+        } else if (isNativeMiniMessageSerializer) {
             NativeMiniMessageSerializer.init();
         }
     }
 
-    public static void globalSerializer(@NotNull ComponentSerializer<? extends Component, ? extends Component, String> globalSerializer) {
-        GLOBAL_SERIALIZER = Objects.requireNonNull(globalSerializer, "globalSerializer cannot be null");
-    }
-
-    public static @NotNull ComponentSerializer<? extends Component, ? extends Component, String> globalSerializer() {
+    public static @NotNull ComponentSerializer<Component, ? extends Component, String> globalSerializer() {
         return GLOBAL_SERIALIZER;
     }
 
-    @SuppressWarnings("unchecked")
-    public static @NotNull String serialize(@NotNull Component component) {
-        return ((ComponentSerializer<Component, Component, String>) GLOBAL_SERIALIZER).serialize(component);
+    public static void globalSerializer(@NotNull ComponentSerializer<Component, ? extends Component, String> globalSerializer) {
+        GLOBAL_SERIALIZER = Objects.requireNonNull(globalSerializer, "globalSerializer cannot be null");
     }
 
     public static @NotNull Component deserialize(@NotNull String input) {
@@ -95,6 +82,10 @@ public final class GlobalAdventureSerializer {
 
     public static @NotNull Component[] deserializeArray(@NotNull String... input) {
         return deserialize(input).toArray(new Component[0]);
+    }
+
+    public static @NotNull String serialize(@NotNull Component component) {
+        return GLOBAL_SERIALIZER.serialize(component);
     }
 
 }

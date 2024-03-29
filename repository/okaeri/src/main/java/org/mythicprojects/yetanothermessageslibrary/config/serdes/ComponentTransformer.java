@@ -9,9 +9,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class ComponentTransformer extends BidirectionalTransformer<String, Component> {
 
-    private final ComponentSerializer<Component, Component, String> componentSerializer;
+    private final ComponentSerializer<Component, ? extends Component, String> componentSerializer;
 
-    public ComponentTransformer(@NotNull ComponentSerializer<Component, Component, String> componentSerializer) {
+    public ComponentTransformer(@NotNull ComponentSerializer<Component, ? extends Component, String> componentSerializer) {
         this.componentSerializer = componentSerializer;
     }
 

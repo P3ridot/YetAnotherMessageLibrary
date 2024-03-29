@@ -21,7 +21,10 @@ public class OkaeriPlaceholdersReplaceable extends ComponentReplacement {
     private final Placeholders placeholders;
     private final Function<PlaceholderContext, PlaceholderContext> applyContexts;
 
-    public OkaeriPlaceholdersReplaceable(@NotNull Placeholders placeholders, @NotNull Function<PlaceholderContext, PlaceholderContext> applyContexts) {
+    public OkaeriPlaceholdersReplaceable(
+            @NotNull Placeholders placeholders,
+            @NotNull Function<PlaceholderContext, PlaceholderContext> applyContexts
+    ) {
         super(FIELD_PATTERN);
         this.placeholders = placeholders;
         this.applyContexts = applyContexts;
