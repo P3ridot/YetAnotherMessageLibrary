@@ -1,3 +1,5 @@
 dependencies {
     compileOnlyApi adventure.api
+    compileOnlyApi adventure.serializer.legacy
+    compileOnlyApi adventure.serializer.minimessage
 }

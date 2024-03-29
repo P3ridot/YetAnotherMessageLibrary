@@ -44,10 +44,9 @@ public class ChatHolder extends SendableHolder {
             return;
         }
 
-        List<Component> finalMessage = this.messages.stream()
+        this.messages.stream()
                 .map(message -> ComponentReplacer.replace(locale, message, replacements))
-                .collect(Collectors.toList());
-        viewer.sendChatMessage(finalMessage);
+                .forEachOrdered(viewer::sendChatMessage);
     }
 
     @Override
