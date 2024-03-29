@@ -7,6 +7,9 @@ import org.jetbrains.annotations.Nullable;
 
 public interface Replaceable {
 
+    /**
+     * @return whether this replaceable supports string replacement
+     */
     default boolean supportsStringReplacement() {
         return false;
     }

@@ -16,11 +16,19 @@ import org.mythicprojects.yetanothermessageslibrary.replace.Replaceable;
 import org.mythicprojects.yetanothermessageslibrary.replace.replacement.Replacement;
 import org.mythicprojects.yetanothermessageslibrary.util.TriFunction;
 
+/**
+ * MessageDispatcher is a class that allows you to send messages to receivers with placeholders and actions.
+ * It highly simplifies the process of sending messages to multiple receivers in multiple languages etc.
+ *
+ * @param <RECEIVER>   the type of the receiver
+ * @param <DISPATCHER> the type of the dispatcher itself
+ */
 @SuppressWarnings("unchecked")
 public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatcher<RECEIVER, ? extends DISPATCHER>> {
 
     /**
      * Add a receiver to the dispatcher
+     *
      * @param receiver the receiver
      * @return this dispatcher
      */
@@ -29,6 +37,7 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     /**
      * Add multiple receivers to the dispatcher
+     *
      * @param receivers the receivers
      * @return this dispatcher
      */
@@ -40,6 +49,7 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     /**
      * Add multiple receivers to the dispatcher
+     *
      * @param receivers the receivers
      * @return this dispatcher
      */
@@ -53,6 +63,7 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     /**
      * Add all players to the dispatcher
+     *
      * @return this dispatcher
      * @throws UnsupportedOperationException if the operation is not implemented in the current MessageDispatcher
      */
@@ -65,6 +76,7 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     /**
      * Add all players to the dispatcher
+     *
      * @return this dispatcher
      * @throws UnsupportedOperationException if the operation is not implemented in the current MessageDispatcher
      */
@@ -75,6 +87,7 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     /**
      * Add all viewers to the dispatcher
+     *
      * @return this dispatcher
      * @throws UnsupportedOperationException if the operation is not implemented in the current MessageDispatcher
      */
@@ -85,6 +98,7 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     /**
      * Add a predicate to the dispatcher
+     *
      * @param predicate the predicate
      * @return this dispatcher
      */
@@ -93,9 +107,10 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     /**
      * Add a predicate to the dispatcher for a specific receiver class
+     *
      * @param receiverClass the class of the receiver
-     * @param predicate the predicate
-     * @param <T> the type of the receiver
+     * @param predicate     the predicate
+     * @param <T>           the type of the receiver
      * @return this dispatcher
      */
     @Contract("_, _ -> this")
@@ -110,7 +125,8 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     /**
      * Add a field to the dispatcher to use by the replacements
-     * @param key the key of the field
+     *
+     * @param key   the key of the field
      * @param value the value of the field
      * @return this dispatcher
      */
@@ -119,6 +135,7 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     /**
      * Add multiple fields to the dispatcher to use by the replacements
+     *
      * @param fields the fields
      * @return this dispatcher
      */
@@ -237,6 +254,7 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     /**
      * Add an action to the dispatcher that will be executed after the message is sent
+     *
      * @param action the action
      * @return this dispatcher
      */
@@ -245,6 +263,7 @@ public interface MessageDispatcher<RECEIVER, DISPATCHER extends MessageDispatche
 
     /**
      * Send the message to all receivers
+     *
      * @return this dispatcher
      */
     @Contract(" -> this")

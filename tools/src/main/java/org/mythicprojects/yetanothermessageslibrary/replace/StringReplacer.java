@@ -22,7 +22,6 @@ public final class StringReplacer {
         for (Replaceable replacement : replacements) {
             text = replacement.replace(locale, text);
         }
-
         return text;
     }
 

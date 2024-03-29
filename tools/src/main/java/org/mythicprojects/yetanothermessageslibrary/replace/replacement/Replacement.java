@@ -10,7 +10,6 @@ import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.TextReplacementConfig;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.mythicprojects.yetanothermessageslibrary.replace.Replaceable;
@@ -23,22 +22,30 @@ public abstract class Replacement implements Replaceable {
     private final Object placeholder;
 
     protected Replacement(@NotNull Object placeholder) {
-        PlaceholderType placeholderType = PlaceholderType.match(placeholder.getClass());
+        PlaceholderType placeholderType = PlaceholderType.findType(placeholder.getClass());
         Validate.isTrue(placeholderType != null, "placeholder must be a String or Pattern");
         this.placeholderType = placeholderType;
         this.placeholder = placeholder;
     }
 
+    /**
+     * @return the type of placeholder (String or Pattern)
+     */
     protected final @NotNull Replacement.PlaceholderType getPlaceholderType() {
         return this.placeholderType;
     }
 
+    /**
+     * @return a new TextReplacementConfig.Builder that matches the placeholder
+     */
     protected final @NotNull TextReplacementConfig.Builder newReplacementBuilder() {
         return this.placeholderType.newReplacementBuilder(this.placeholder);
     }
 
-    @ApiStatus.Internal
-    public final @NotNull Object getPlaceholder() {
+    /**
+     * @return the placeholder object to match (String or Pattern)
+     */
+    protected final @NotNull Object getPlaceholder() {
         return this.placeholder;
     }
 
@@ -79,12 +86,8 @@ public abstract class Replacement implements Replaceable {
             this.replacementBuilderFactory = replacementBuilderFactory;
         }
 
-        public Class<?> getClazz() {
+        private @NotNull Class<?> getClazz() {
             return this.clazz;
-        }
-
-        public boolean isInstance(Object obj) {
-            return this.clazz.isInstance(obj);
         }
 
         public @NotNull String replace(@NotNull String text, @NotNull Object placeholder, @NotNull String replacement) {
@@ -95,7 +98,7 @@ public abstract class Replacement implements Replaceable {
             return this.replacementBuilderFactory.apply(placeholder);
         }
 
-        public static @Nullable Replacement.PlaceholderType match(@NotNull Class<?> clazz) {
+        public static @Nullable Replacement.PlaceholderType findType(@NotNull Class<?> clazz) {
             return PLACEHOLDERS_MAP.get(clazz);
         }
 
