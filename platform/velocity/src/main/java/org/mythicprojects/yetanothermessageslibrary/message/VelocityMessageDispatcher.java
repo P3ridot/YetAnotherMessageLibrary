@@ -21,6 +21,33 @@ public class VelocityMessageDispatcher<DISPATCHER extends VelocityMessageDispatc
         super(viewerService, localeSupplier, messageSupplier);
     }
 
+    /**
+     * @deprecated use {@link #all(ProxyServer)} instead
+     */
+    @Deprecated
+    @Override
+    public DISPATCHER all() throws UnsupportedOperationException {
+        return super.all();
+    }
+
+    /**
+     * @deprecated use {@link #allPlayers(ProxyServer)} instead
+     */
+    @Deprecated
+    @Override
+    public DISPATCHER allPlayers() throws UnsupportedOperationException {
+        return super.allPlayers();
+    }
+
+    /**
+     * @deprecated use {@link #console(ProxyServer)} instead
+     */
+    @Deprecated
+    @Override
+    public DISPATCHER console() throws UnsupportedOperationException {
+        return super.console();
+    }
+
     @Contract("_ -> this")
     public DISPATCHER all(@NotNull ProxyServer proxy) {
         this.allPlayers(proxy);
