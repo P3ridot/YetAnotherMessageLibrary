@@ -22,6 +22,13 @@ public class VelocityMessageDispatcher<DISPATCHER extends VelocityMessageDispatc
     }
 
     @Contract("_ -> this")
+    public DISPATCHER all(@NotNull ProxyServer proxy) {
+        this.allPlayers(proxy);
+        this.console(proxy);
+        return (DISPATCHER) this;
+    }
+
+    @Contract("_ -> this")
     public DISPATCHER allPlayers(@NotNull ProxyServer proxy) {
         proxy.getAllPlayers().forEach(this::receiver);
         return (DISPATCHER) this;
