@@ -43,7 +43,6 @@ subprojects {
         publications {
             libraries(MavenPublication) {
                 artifactId = project.name.toLowerCase()
-
                 from components.java
 
                 pom {
