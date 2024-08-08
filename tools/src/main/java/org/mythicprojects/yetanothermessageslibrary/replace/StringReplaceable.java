@@ -1,15 +1,14 @@
 package org.mythicprojects.yetanothermessageslibrary.replace;
 
 import java.util.Locale;
-import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface Replaceable {
+public interface StringReplaceable extends Replaceable {
 
-    @NotNull Component replace(@Nullable Locale locale, @NotNull Component text);
+    @NotNull String replace(@Nullable Locale locale, @NotNull String text);
 
-    default @NotNull Component replace(@NotNull Component text) {
+    default @NotNull String replace(@NotNull String text) {
         return this.replace(null, text);
     }
 

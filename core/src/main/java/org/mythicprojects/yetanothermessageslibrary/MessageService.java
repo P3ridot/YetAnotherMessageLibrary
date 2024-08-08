@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Unmodifiable;
 import org.mythicprojects.yetanothermessageslibrary.locale.LocaleProvider;
 import org.mythicprojects.yetanothermessageslibrary.replace.ComponentReplacer;
 import org.mythicprojects.yetanothermessageslibrary.replace.Replaceable;
+import org.mythicprojects.yetanothermessageslibrary.replace.StringReplaceable;
 import org.mythicprojects.yetanothermessageslibrary.replace.StringReplacer;
 
 public interface MessageService<REPOSITORY extends MessageRepository> {
@@ -52,7 +53,7 @@ public interface MessageService<REPOSITORY extends MessageRepository> {
      * @param replacements   replacements to replace in message
      * @return message with replaced placeholders
      */
-    default String getString(@Nullable Object entity, @NotNull Function<@NotNull REPOSITORY, @Nullable String> stringSupplier, @NotNull Replaceable... replacements) {
+    default String getString(@Nullable Object entity, @NotNull Function<@NotNull REPOSITORY, @Nullable String> stringSupplier, @NotNull StringReplaceable... replacements) {
         String string = this.get(entity, stringSupplier);
         if (string == null) {
             return null;
@@ -90,7 +91,7 @@ public interface MessageService<REPOSITORY extends MessageRepository> {
      * @param replacements replacements to replace in message
      * @return message with replaced placeholders
      */
-    default List<String> getStringList(@Nullable Object entity, @NotNull Function<@NotNull REPOSITORY, @Nullable List<String>> listSupplier, @NotNull Replaceable... replacements) {
+    default List<String> getStringList(@Nullable Object entity, @NotNull Function<@NotNull REPOSITORY, @Nullable List<String>> listSupplier, @NotNull StringReplaceable... replacements) {
         List<String> stringList = this.get(entity, listSupplier);
         if (stringList == null || stringList.isEmpty()) {
             return stringList;

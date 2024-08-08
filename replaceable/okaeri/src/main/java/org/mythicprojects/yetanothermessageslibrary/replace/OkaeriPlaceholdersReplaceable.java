@@ -14,7 +14,7 @@ import org.mythicprojects.yetanothermessageslibrary.adventure.GlobalAdventureSer
 import org.mythicprojects.yetanothermessageslibrary.replace.replacement.ComponentReplacement;
 
 @ApiStatus.Experimental
-public class OkaeriPlaceholdersReplaceable extends ComponentReplacement {
+public class OkaeriPlaceholdersReplaceable extends ComponentReplacement implements StringReplaceable {
 
     private static final Pattern FIELD_PATTERN = Pattern.compile("\\{(?<content>[^}]+)\\}");
 
@@ -28,11 +28,6 @@ public class OkaeriPlaceholdersReplaceable extends ComponentReplacement {
         super(FIELD_PATTERN);
         this.placeholders = placeholders;
         this.applyContexts = applyContexts;
-    }
-
-    @Override
-    public boolean supportsStringReplacement() {
-        return super.supportsStringReplacement();
     }
 
     @Override

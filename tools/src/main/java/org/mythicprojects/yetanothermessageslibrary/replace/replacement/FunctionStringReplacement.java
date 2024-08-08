@@ -6,8 +6,9 @@ import java.util.function.Supplier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.mythicprojects.yetanothermessageslibrary.adventure.GlobalAdventureSerializer;
+import org.mythicprojects.yetanothermessageslibrary.replace.StringReplaceable;
 
-public class FunctionStringReplacement extends FunctionReplacement {
+public class FunctionStringReplacement extends FunctionReplacement implements StringReplaceable {
 
     private final Function<@Nullable Locale, ? extends @NotNull String> replacementFunction;
 
@@ -19,11 +20,6 @@ public class FunctionStringReplacement extends FunctionReplacement {
     protected FunctionStringReplacement(@NotNull Object placeholder, @NotNull Supplier<@NotNull String> replacementSupplier) {
         super(placeholder, locale -> GlobalAdventureSerializer.deserialize(replacementSupplier.get()));
         this.replacementFunction = locale -> replacementSupplier.get();
-    }
-
-    @Override
-    public boolean supportsStringReplacement() {
-        return true;
     }
 
     @Override

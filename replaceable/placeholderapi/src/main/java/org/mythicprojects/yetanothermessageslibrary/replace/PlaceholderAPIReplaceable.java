@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import org.mythicprojects.yetanothermessageslibrary.adventure.GlobalAdventureSerializer;
 import org.mythicprojects.yetanothermessageslibrary.replace.replacement.ComponentReplacement;
 
-public class PlaceholderAPIReplaceable extends ComponentReplacement {
+public class PlaceholderAPIReplaceable extends ComponentReplacement implements StringReplaceable {
 
     private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("[%]([^%]+)[%]");
 
@@ -24,11 +24,6 @@ public class PlaceholderAPIReplaceable extends ComponentReplacement {
         this.replacement = this.newReplacementBuilder()
                 .replacement((result, input) -> GlobalAdventureSerializer.deserialize(this.replacePlaceholder(result.group())))
                 .build();
-    }
-
-    @Override
-    public boolean supportsStringReplacement() {
-        return true;
     }
 
     @Override
