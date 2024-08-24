@@ -44,7 +44,7 @@ Implementations of `Replaceable` interface to easily replace placeholders in mes
 ```xml
 
 <dependency>
-    <groupId>org.mythicprojects.yetanothermessageslibrary</groupId>
+    <groupId>dev.peri.yetanothermessageslibrary</groupId>
     <artifactId>[module]</artifactId>
     <version>[version]</version>
 </dependency>
@@ -68,6 +68,6 @@ repositories {
 
 ```groovy
 dependencies {
-    implementation 'org.mythicprojects.yetanothermessageslibrary:[module]:[version]'
+    implementation 'dev.peri.yetanothermessageslibrary:[module]:[version]'
 }
 ```
