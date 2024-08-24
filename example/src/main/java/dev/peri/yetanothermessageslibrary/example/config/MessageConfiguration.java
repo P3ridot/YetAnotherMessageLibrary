@@ -1,12 +1,12 @@
 package dev.peri.yetanothermessageslibrary.example.config;
 
+import dev.peri.yetanothermessageslibrary.MessageRepository;
+import dev.peri.yetanothermessageslibrary.message.SendableMessage;
+import dev.peri.yetanothermessageslibrary.message.holder.impl.ActionBarHolder;
+import dev.peri.yetanothermessageslibrary.message.holder.impl.BossBarHolder;
+import dev.peri.yetanothermessageslibrary.message.holder.impl.ChatHolder;
 import eu.okaeri.configs.OkaeriConfig;
 import net.kyori.adventure.bossbar.BossBar;
-import org.mythicprojects.yetanothermessageslibrary.MessageRepository;
-import org.mythicprojects.yetanothermessageslibrary.message.SendableMessage;
-import org.mythicprojects.yetanothermessageslibrary.message.holder.impl.ActionBarHolder;
-import org.mythicprojects.yetanothermessageslibrary.message.holder.impl.BossBarHolder;
-import org.mythicprojects.yetanothermessageslibrary.message.holder.impl.ChatHolder;
 
 public class MessageConfiguration extends OkaeriConfig implements MessageRepository {
 

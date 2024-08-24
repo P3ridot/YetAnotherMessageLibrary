@@ -1,12 +1,12 @@
 package dev.peri.yetanothermessageslibrary.example.complex;
 
+import dev.peri.yetanothermessageslibrary.SimpleSendableMessageService;
 import dev.peri.yetanothermessageslibrary.example.config.MessageConfiguration;
+import dev.peri.yetanothermessageslibrary.message.MessageDispatcherFactory;
+import dev.peri.yetanothermessageslibrary.viewer.ViewerDataSupplier;
+import dev.peri.yetanothermessageslibrary.viewer.ViewerFactory;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
-import org.mythicprojects.yetanothermessageslibrary.SimpleSendableMessageService;
-import org.mythicprojects.yetanothermessageslibrary.message.MessageDispatcherFactory;
-import org.mythicprojects.yetanothermessageslibrary.viewer.ViewerDataSupplier;
-import org.mythicprojects.yetanothermessageslibrary.viewer.ViewerFactory;
 
 public class ExampleMessageService extends SimpleSendableMessageService<CommandSender, MessageConfiguration, ExampleMessageDispatcher> {
 

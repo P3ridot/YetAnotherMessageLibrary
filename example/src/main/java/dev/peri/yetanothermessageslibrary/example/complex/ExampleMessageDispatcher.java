@@ -1,5 +1,8 @@
 package dev.peri.yetanothermessageslibrary.example.complex;
 
+import dev.peri.yetanothermessageslibrary.message.BukkitMessageDispatcher;
+import dev.peri.yetanothermessageslibrary.message.Sendable;
+import dev.peri.yetanothermessageslibrary.viewer.ViewerService;
 import java.util.Locale;
 import java.util.function.Function;
 import org.bukkit.World;
@@ -8,9 +11,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.mythicprojects.yetanothermessageslibrary.message.BukkitMessageDispatcher;
-import org.mythicprojects.yetanothermessageslibrary.message.Sendable;
-import org.mythicprojects.yetanothermessageslibrary.viewer.ViewerService;
 
 public class ExampleMessageDispatcher extends BukkitMessageDispatcher<ExampleMessageDispatcher> {
 

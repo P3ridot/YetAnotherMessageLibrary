@@ -1,5 +1,5 @@
 name: YAML-Example
 version: 4.2.0
-main: org.mythicprojects.yetanothermessageslibrary.example.ExamplePlugin
+main: dev.peri.yetanothermessageslibrary.example.ExamplePlugin
 author: Peridot
 website: peri.dev

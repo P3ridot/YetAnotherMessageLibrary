@@ -1,7 +1,9 @@
 package dev.peri.yetanothermessageslibrary.example;
 
+import dev.peri.yetanothermessageslibrary.SendableMessageService;
 import dev.peri.yetanothermessageslibrary.example.complex.ExampleMessageDispatcher;
 import dev.peri.yetanothermessageslibrary.example.config.MessageConfiguration;
+import dev.peri.yetanothermessageslibrary.message.BukkitMessageDispatcher;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,8 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.mythicprojects.yetanothermessageslibrary.SendableMessageService;
-import org.mythicprojects.yetanothermessageslibrary.message.BukkitMessageDispatcher;
 
 public class ExampleListener implements Listener {
 

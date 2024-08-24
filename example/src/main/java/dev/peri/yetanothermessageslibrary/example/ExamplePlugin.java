@@ -1,8 +1,16 @@
 package dev.peri.yetanothermessageslibrary.example;
 
+import dev.peri.yetanothermessageslibrary.BukkitMessageService;
+import dev.peri.yetanothermessageslibrary.SendableMessageService;
+import dev.peri.yetanothermessageslibrary.adventure.GlobalAdventureSerializer;
+import dev.peri.yetanothermessageslibrary.config.serdes.YAMLSerdes;
 import dev.peri.yetanothermessageslibrary.example.complex.ExampleMessageDispatcher;
 import dev.peri.yetanothermessageslibrary.example.complex.ExampleMessageService;
 import dev.peri.yetanothermessageslibrary.example.config.MessageConfiguration;
+import dev.peri.yetanothermessageslibrary.locale.BukkitPlayerLocaleProvider;
+import dev.peri.yetanothermessageslibrary.message.BukkitMessageDispatcher;
+import dev.peri.yetanothermessageslibrary.viewer.BukkitViewerDataSupplier;
+import dev.peri.yetanothermessageslibrary.viewer.ViewerFactory;
 import eu.okaeri.configs.ConfigManager;
 import eu.okaeri.configs.yaml.bukkit.YamlBukkitConfigurer;
 import java.io.File;
@@ -11,14 +19,6 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mythicprojects.yetanothermessageslibrary.BukkitMessageService;
-import org.mythicprojects.yetanothermessageslibrary.SendableMessageService;
-import org.mythicprojects.yetanothermessageslibrary.adventure.GlobalAdventureSerializer;
-import org.mythicprojects.yetanothermessageslibrary.config.serdes.YAMLSerdes;
-import org.mythicprojects.yetanothermessageslibrary.locale.BukkitPlayerLocaleProvider;
-import org.mythicprojects.yetanothermessageslibrary.message.BukkitMessageDispatcher;
-import org.mythicprojects.yetanothermessageslibrary.viewer.BukkitViewerDataSupplier;
-import org.mythicprojects.yetanothermessageslibrary.viewer.ViewerFactory;
 
 public class ExamplePlugin extends JavaPlugin {
 

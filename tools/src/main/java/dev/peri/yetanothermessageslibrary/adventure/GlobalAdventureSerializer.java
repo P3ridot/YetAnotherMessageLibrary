@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * Simple utility class to provide global access to adventure serializer.
  * <p>
  * This class is used mostly by string replacements ({@link SimpleStringReplacement}, {@link FunctionStringReplacement})
- * and some of {@link org.mythicprojects.yetanothermessageslibrary.message.holder.SendableHolder} implementations.
+ * and some of {@link dev.peri.yetanothermessageslibrary.message.holder.SendableHolder} implementations.
  */
 public final class GlobalAdventureSerializer {
 
