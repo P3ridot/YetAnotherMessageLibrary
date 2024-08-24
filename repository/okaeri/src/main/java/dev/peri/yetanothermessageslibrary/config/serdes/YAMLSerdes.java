@@ -1,7 +1,7 @@
 package dev.peri.yetanothermessageslibrary.config.serdes;
 
 import dev.peri.yetanothermessageslibrary.adventure.GlobalAdventureSerializer;
-import dev.peri.yetanothermessageslibrary.config.serdes.holder.ActionBarHolderTransformer;
+import dev.peri.yetanothermessageslibrary.config.serdes.holder.ActionBarHolderSerializer;
 import dev.peri.yetanothermessageslibrary.config.serdes.holder.BossBarHolderSerializer;
 import dev.peri.yetanothermessageslibrary.config.serdes.holder.ChatSerializer;
 import dev.peri.yetanothermessageslibrary.config.serdes.holder.SoundHolderSerializer;
@@ -27,7 +27,7 @@ public class YAMLSerdes implements OkaeriSerdesPack {
     public void register(SerdesRegistry registry) {
         // Messages
         registry.register(new ChatSerializer());
-        registry.register(new ActionBarHolderTransformer());
+        registry.register(new ActionBarHolderSerializer(this.componentSerializer));
         registry.register(new TitleHolderSerializer());
         registry.register(new BossBarHolderSerializer());
         registry.register(new SoundHolderSerializer());
