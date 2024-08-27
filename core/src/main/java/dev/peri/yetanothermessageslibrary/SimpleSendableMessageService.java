@@ -7,23 +7,25 @@ import dev.peri.yetanothermessageslibrary.viewer.ViewerFactory;
 import dev.peri.yetanothermessageslibrary.viewer.ViewerService;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class SimpleSendableMessageService<R, C extends MessageRepository, D extends MessageDispatcher<R, ? extends D>> extends SimpleMessageService<C> implements SendableMessageService<R, C, D> {
+public abstract class SimpleSendableMessageService<RECEIVER, REPOSITORY extends MessageRepository, DISPATCHER extends MessageDispatcher<RECEIVER, ? extends DISPATCHER>>
+        extends SimpleMessageService<REPOSITORY>
+        implements SendableMessageService<RECEIVER, REPOSITORY, DISPATCHER> {
 
-    private final ViewerService<R> viewerService;
-    private final MessageDispatcherFactory<R, ? extends D> dispatcherFactory;
+    private final ViewerService<RECEIVER> viewerService;
+    private final MessageDispatcherFactory<RECEIVER, ? extends DISPATCHER> dispatcherFactory;
 
     public SimpleSendableMessageService(
-            @NotNull ViewerService<R> viewerService,
-            @NotNull MessageDispatcherFactory<R, ? extends D> dispatcherFactory
+            @NotNull ViewerService<RECEIVER> viewerService,
+            @NotNull MessageDispatcherFactory<RECEIVER, ? extends DISPATCHER> dispatcherFactory
     ) {
         this.viewerService = viewerService;
         this.dispatcherFactory = dispatcherFactory;
     }
 
     public SimpleSendableMessageService(
-            @NotNull ViewerDataSupplier<R> viewerDataSupplier,
-            @NotNull ViewerFactory<R> viewerFactory,
-            @NotNull MessageDispatcherFactory<R, ? extends D> dispatcherFactory
+            @NotNull ViewerDataSupplier<RECEIVER> viewerDataSupplier,
+            @NotNull ViewerFactory<RECEIVER> viewerFactory,
+            @NotNull MessageDispatcherFactory<RECEIVER, ? extends DISPATCHER> dispatcherFactory
     ) {
         this(
                 new ViewerService<>(viewerDataSupplier, viewerFactory),
@@ -32,12 +34,12 @@ public abstract class SimpleSendableMessageService<R, C extends MessageRepositor
     }
 
     @Override
-    public @NotNull ViewerService<R> getViewerService() {
+    public @NotNull ViewerService<RECEIVER> getViewerService() {
         return this.viewerService;
     }
 
     @Override
-    public @NotNull MessageDispatcherFactory<R, ? extends D> getDispatcherFactory() {
+    public @NotNull MessageDispatcherFactory<RECEIVER, ? extends DISPATCHER> getDispatcherFactory() {
         return this.dispatcherFactory;
     }
 

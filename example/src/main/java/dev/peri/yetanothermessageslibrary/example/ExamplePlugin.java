@@ -2,7 +2,8 @@ package dev.peri.yetanothermessageslibrary.example;
 
 import dev.peri.yetanothermessageslibrary.BukkitMessageService;
 import dev.peri.yetanothermessageslibrary.SendableMessageService;
-import dev.peri.yetanothermessageslibrary.config.serdes.SerdesMessages;
+import dev.peri.yetanothermessageslibrary.adventure.GlobalAdventureSerializer;
+import dev.peri.yetanothermessageslibrary.config.serdes.YAMLSerdes;
 import dev.peri.yetanothermessageslibrary.example.complex.ExampleMessageDispatcher;
 import dev.peri.yetanothermessageslibrary.example.complex.ExampleMessageService;
 import dev.peri.yetanothermessageslibrary.example.config.MessageConfiguration;
@@ -15,10 +16,13 @@ import eu.okaeri.configs.yaml.bukkit.YamlBukkitConfigurer;
 import java.io.File;
 import java.util.Locale;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ExamplePlugin extends JavaPlugin {
+
+    private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
     private final File englishMessageFile = new File(this.getDataFolder(), "en.yml");
     private final File polishMessageFile = new File(this.getDataFolder(), "pl.yml");
@@ -34,6 +38,9 @@ public class ExamplePlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.adventure = BukkitAudiences.create(this);
+
+        // Register global serializer (used for e.g. by string replacements)
+        GlobalAdventureSerializer.globalSerializer(MINI_MESSAGE);
 
         // Simple way
         this.simpleMessageService = new BukkitMessageService<>(this, this.adventure);
@@ -60,7 +67,7 @@ public class ExamplePlugin extends JavaPlugin {
     private static MessageConfiguration prepareMessageConfiguration(File file) {
         return ConfigManager.create(MessageConfiguration.class, it -> {
            it.withConfigurer(new YamlBukkitConfigurer());
-           it.withSerdesPack(new SerdesMessages());
+           it.withSerdesPack(new YAMLSerdes());
 
            it.withBindFile(file);
            it.saveDefaults();

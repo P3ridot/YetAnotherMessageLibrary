@@ -1,25 +1,25 @@
 package dev.peri.yetanothermessageslibrary.message.holder.impl;
 
-import dev.peri.yetanothermessageslibrary.adventure.MiniComponent;
-import dev.peri.yetanothermessageslibrary.adventure.RawComponent;
+import dev.peri.yetanothermessageslibrary.adventure.GlobalAdventureSerializer;
 import dev.peri.yetanothermessageslibrary.message.SendableMessage;
 import dev.peri.yetanothermessageslibrary.message.holder.SendableHolder;
 import dev.peri.yetanothermessageslibrary.replace.ComponentReplacer;
 import dev.peri.yetanothermessageslibrary.replace.Replaceable;
 import dev.peri.yetanothermessageslibrary.viewer.Viewer;
 import java.util.Locale;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ActionBarHolder extends SendableHolder {
 
-    private final RawComponent message;
+    private final Component message;
 
-    public ActionBarHolder(@NotNull RawComponent message) {
+    public ActionBarHolder(@NotNull Component message) {
         this.message = message;
     }
 
-    public @NotNull RawComponent getMessage() {
+    public @NotNull Component getMessage() {
         return this.message;
     }
 
@@ -30,15 +30,15 @@ public class ActionBarHolder extends SendableHolder {
 
     @Override
     public @NotNull SendableHolder copy(@NotNull Replaceable... replacements) {
-        return new ActionBarHolder(ComponentReplacer.replaceRaw(this.message, replacements));
+        return new ActionBarHolder(ComponentReplacer.replace(this.message, replacements));
     }
 
-    public static @NotNull SendableMessage message(@NotNull RawComponent message) {
+    public static @NotNull SendableMessage message(@NotNull Component message) {
         return SendableMessage.of(new ActionBarHolder(message));
     }
 
     public static @NotNull SendableMessage message(@NotNull String message) {
-        return SendableMessage.of(new ActionBarHolder(MiniComponent.of(message)));
+        return SendableMessage.of(new ActionBarHolder(GlobalAdventureSerializer.deserialize(message)));
     }
 
 }

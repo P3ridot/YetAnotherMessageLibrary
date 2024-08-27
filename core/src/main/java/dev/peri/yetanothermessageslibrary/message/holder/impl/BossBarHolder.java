@@ -1,7 +1,6 @@
 package dev.peri.yetanothermessageslibrary.message.holder.impl;
 
-import dev.peri.yetanothermessageslibrary.adventure.MiniComponent;
-import dev.peri.yetanothermessageslibrary.adventure.RawComponent;
+import dev.peri.yetanothermessageslibrary.adventure.GlobalAdventureSerializer;
 import dev.peri.yetanothermessageslibrary.message.holder.SendableHolder;
 import dev.peri.yetanothermessageslibrary.replace.ComponentReplacer;
 import dev.peri.yetanothermessageslibrary.replace.Replaceable;
@@ -11,13 +10,14 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class BossBarHolder extends SendableHolder {
 
-    private final RawComponent name;
+    private final Component name;
 
     private final float progress;
     private final BossBar.Color color;
@@ -27,7 +27,7 @@ public class BossBarHolder extends SendableHolder {
 
     private final boolean clearOtherBars;
 
-    public BossBarHolder(@NotNull RawComponent name, float progress, @NotNull BossBar.Color color, @NotNull BossBar.Overlay overlay, @NotNull Collection<BossBar.Flag> flags, int stay, boolean clearOtherBars) {
+    public BossBarHolder(@NotNull Component name, float progress, @NotNull BossBar.Color color, @NotNull BossBar.Overlay overlay, @NotNull Collection<BossBar.Flag> flags, int stay, boolean clearOtherBars) {
         this.name = name;
         this.progress = progress;
         this.color = color;
@@ -37,7 +37,7 @@ public class BossBarHolder extends SendableHolder {
         this.stay = stay;
     }
 
-    public @NotNull RawComponent getName() {
+    public @NotNull Component getName() {
         return this.name;
     }
 
@@ -81,7 +81,7 @@ public class BossBarHolder extends SendableHolder {
     @Override
     public @NotNull SendableHolder copy(@NotNull Replaceable... replacements) {
         return new BossBarHolder(
-                ComponentReplacer.replaceRaw(this.name, replacements),
+                ComponentReplacer.replace(this.name, replacements),
                 this.progress,
                 this.color,
                 this.overlay,
@@ -91,17 +91,17 @@ public class BossBarHolder extends SendableHolder {
         );
     }
 
-    public static @NotNull Builder builder(@NotNull RawComponent name) {
+    public static @NotNull Builder builder(@NotNull Component name) {
         return new Builder(name);
     }
 
     public static @NotNull Builder builder(@NotNull String name) {
-        return new Builder(MiniComponent.of(name));
+        return new Builder(GlobalAdventureSerializer.deserialize(name));
     }
 
     public static class Builder {
 
-        private final RawComponent name;
+        private final Component name;
 
         private float progress = BossBar.MAX_PROGRESS;
         private BossBar.Color color = BossBar.Color.PINK;
@@ -112,7 +112,7 @@ public class BossBarHolder extends SendableHolder {
 
         private boolean clearOtherBars = false;
 
-        private Builder(@NotNull RawComponent name) {
+        private Builder(@NotNull Component name) {
             this.name = name;
         }
 

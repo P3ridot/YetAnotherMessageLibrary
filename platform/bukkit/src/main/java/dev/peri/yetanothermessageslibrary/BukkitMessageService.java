@@ -10,7 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public class BukkitMessageService<C extends MessageRepository> extends SimpleSendableMessageService<CommandSender, C, BukkitMessageDispatcher<?>> {
+public class BukkitMessageService<REPOSITORY extends MessageRepository>
+        extends SimpleSendableMessageService<CommandSender, REPOSITORY, BukkitMessageDispatcher<?>> {
 
     public BukkitMessageService(@NotNull ViewerService<CommandSender> viewerService) {
         super(
@@ -26,7 +27,7 @@ public class BukkitMessageService<C extends MessageRepository> extends SimpleSen
         ));
     }
 
-    public static BiConsumer<Runnable, Long> wrapScheduler(JavaPlugin plugin) {
+    public static BiConsumer<Runnable, Long> wrapScheduler(@NotNull JavaPlugin plugin) {
         return (runnable, delay) -> plugin.getServer().getScheduler().runTaskLater(plugin, runnable, delay);
     }
 

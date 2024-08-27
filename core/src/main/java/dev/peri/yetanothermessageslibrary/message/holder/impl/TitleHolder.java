@@ -1,13 +1,13 @@
 package dev.peri.yetanothermessageslibrary.message.holder.impl;
 
-import dev.peri.yetanothermessageslibrary.adventure.MiniComponent;
-import dev.peri.yetanothermessageslibrary.adventure.RawComponent;
+import dev.peri.yetanothermessageslibrary.adventure.GlobalAdventureSerializer;
 import dev.peri.yetanothermessageslibrary.message.SendableMessage;
 import dev.peri.yetanothermessageslibrary.message.holder.SendableHolder;
 import dev.peri.yetanothermessageslibrary.replace.ComponentReplacer;
 import dev.peri.yetanothermessageslibrary.replace.Replaceable;
 import dev.peri.yetanothermessageslibrary.viewer.Viewer;
 import java.util.Locale;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import net.kyori.adventure.title.Title.Times;
 import net.kyori.adventure.util.Ticks;
@@ -17,21 +17,21 @@ import org.jetbrains.annotations.Nullable;
 
 public class TitleHolder extends SendableHolder {
 
-    private final RawComponent title;
-    private final RawComponent subTitle;
+    private final Component title;
+    private final Component subTitle;
     private final Times times;
 
-    public TitleHolder(@NotNull RawComponent title, @NotNull RawComponent subTitle, @NotNull Times times) {
+    public TitleHolder(@NotNull Component title, @NotNull Component subTitle, @NotNull Times times) {
         this.title = title;
         this.subTitle = subTitle;
         this.times = times;
     }
 
-    public @NotNull RawComponent getTitle() {
+    public @NotNull Component getTitle() {
         return this.title;
     }
 
-    public @NotNull RawComponent getSubTitle() {
+    public @NotNull Component getSubTitle() {
         return this.subTitle;
     }
 
@@ -55,18 +55,18 @@ public class TitleHolder extends SendableHolder {
     @Override
     public @NotNull SendableHolder copy(@NotNull Replaceable... replacements) {
         return new TitleHolder(
-                ComponentReplacer.replaceRaw(this.title, replacements),
-                ComponentReplacer.replaceRaw(this.subTitle, replacements),
+                ComponentReplacer.replace(this.title, replacements),
+                ComponentReplacer.replace(this.subTitle, replacements),
                 this.times
         );
     }
 
-    public static @NotNull SendableMessage message(@NotNull RawComponent title, @NotNull RawComponent subTitle, int fadeIn, int stay, int fadeOut) {
+    public static @NotNull SendableMessage message(@NotNull Component title, @NotNull Component subTitle, int fadeIn, int stay, int fadeOut) {
         return SendableMessage.of(new TitleHolder(title, subTitle, TitleHolder.times(fadeIn, stay, fadeOut)));
     }
 
     public static @NotNull SendableMessage message(@NotNull String title, @NotNull String subTitle, int fadeIn, int stay, int fadeOut) {
-        return TitleHolder.message(MiniComponent.of(title), MiniComponent.of(subTitle), fadeIn, stay, fadeOut);
+        return TitleHolder.message(GlobalAdventureSerializer.deserialize(title), GlobalAdventureSerializer.deserialize(subTitle), fadeIn, stay, fadeOut);
     }
 
     public static @NotNull Builder builder() {
@@ -75,33 +75,33 @@ public class TitleHolder extends SendableHolder {
 
     public static class Builder {
 
-        private RawComponent title = RawComponent.EMPTY;
-        private RawComponent subTitle = RawComponent.EMPTY;
+        private Component title = Component.empty();
+        private Component subTitle = Component.empty();
         private Times times = TitleHolder.times(10, 70, 20);
 
         private Builder() {
         }
 
         @Contract("_ -> this")
-        public Builder title(@NotNull RawComponent title) {
+        public Builder title(@NotNull Component title) {
             this.title = title;
             return this;
         }
 
         @Contract("_ -> this")
         public Builder title(@NotNull String title) {
-            return this.title(MiniComponent.of(title));
+            return this.title(GlobalAdventureSerializer.deserialize(title));
         }
 
         @Contract("_ -> this")
-        public Builder subTitle(@NotNull RawComponent subTitle) {
+        public Builder subTitle(@NotNull Component subTitle) {
             this.subTitle = subTitle;
             return this;
         }
 
         @Contract("_ -> this")
         public Builder subTitle(@NotNull String subTitle) {
-            return this.subTitle(MiniComponent.of(subTitle));
+            return this.subTitle(GlobalAdventureSerializer.deserialize(subTitle));
         }
 
         @Contract("_ -> this")

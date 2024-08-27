@@ -1,8 +1,8 @@
 YetAnotherMessagesLibrary (YAML)
 ===========
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![Version](https://repo.titanvale.net/api/badge/latest/releases/dev/peri/yetanothermessageslibrary/core?color=42c611&name=Releases&prefix=v)
-![Version](https://repo.titanvale.net/api/badge/latest/snapshots/dev/peri/yetanothermessageslibrary/core?color=d45f48&name=Snapshots&prefix=v)
+![Version](https://repo.mythicprojects.org/api/badge/latest/releases/org/mythicprojects/yetanothermessageslibrary/core?color=42c611&name=Releases&prefix=v)
+![Version](https://repo.mythicprojects.org/api/badge/latest/snapshots/org/mythicprojects/yetanothermessageslibrary/core?color=d45f48&name=Snapshots&prefix=v)
 ![GitHub repo size](https://img.shields.io/github/repo-size/P3ridot/YetAnotherMessagesLibrary)
 
 Lightweight and modular *Minecraft Messages Library* based on [adventure](https://github.com/KyoriPowered/adventure).
@@ -21,8 +21,8 @@ Implementations of values/messages suppliers or utilities class to easily add su
 
 ### Replaceable
 Implementations of `Replaceable` interface to easily replace placeholders in messages
-- [okaeri-placeholders](https://github.com/OkaeriPoland/okaeri-placeholders)
 - [PlaceholderAPI](https://github.com/PlaceholderAPI/PlaceholderAPI)
+- [okaeri-placeholders **\[EXPERIMENTAL\]**](https://github.com/OkaeriPoland/okaeri-placeholders)
 
 
 ## Maven/Gradle
@@ -31,13 +31,13 @@ Implementations of `Replaceable` interface to easily replace placeholders in mes
 ```xml
 <!-- Releases -->
 <repository>
-    <id>titanvale-releases</id>
-    <url>https://repo.titanvale.net/releases</url>
+    <id>mythic-releases</id>
+    <url>https://repo.mythicprojects.org/releases</url>
 </repository>
 <!-- Snapshots -->
 <repository>
-    <id>titanvale-snapshots</id>
-    <url>https://repo.titanvale.net/snapshots</url>
+    <id>mythic-snapshots</id>
+    <url>https://repo.mythicprojects.org/snapshots</url>
 </repository>
 ```
 
@@ -55,13 +55,13 @@ Implementations of `Replaceable` interface to easily replace placeholders in mes
 repositories {
     // Releases
     maven {
-        name = "titanvale-releases"
-        url = "https://repo.titanvale.net/releases"
+        name = "mythic-releases"
+        url = "https://repo.mythicprojects.org/releases"
     }
     // Snapshots
     maven {
-        name = "titanvale-snapshots"
-        url = "https://repo.titanvale.net/snapshots"
+        name = "mythic-snapshots"
+        url = "https://repo.mythicprojects.org/snapshots"
     }
 }
 ```

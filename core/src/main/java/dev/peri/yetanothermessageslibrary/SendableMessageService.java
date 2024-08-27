@@ -8,7 +8,8 @@ import java.util.function.Function;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface SendableMessageService<R, C extends MessageRepository, D extends MessageDispatcher<R, ? extends D>> extends MessageService<C> {
+public interface SendableMessageService<RECEIVER, REPOSITORY extends MessageRepository, DISPATCHER extends MessageDispatcher<RECEIVER, ? extends DISPATCHER>>
+        extends MessageService<REPOSITORY> {
 
     /**
      * Wrap message in {@link MessageDispatcher} to easily send it
@@ -17,12 +18,12 @@ public interface SendableMessageService<R, C extends MessageRepository, D extend
      * @return MessageDispatcher
      */
     @SuppressWarnings("unchecked")
-    default D getMessage(@NotNull Function<@NotNull C, @Nullable Sendable> messageSupplier) {
+    default DISPATCHER getMessage(@NotNull Function<@NotNull REPOSITORY, @Nullable Sendable> messageSupplier) {
         return this.getDispatcherFactory().prepareDispatcher(this.getViewerService(), this::getLocale, (entity) -> this.get(entity, messageSupplier));
     }
 
-    @NotNull ViewerService<R> getViewerService();
+    @NotNull ViewerService<RECEIVER> getViewerService();
 
-    @NotNull MessageDispatcherFactory<R, ? extends D> getDispatcherFactory();
+    @NotNull MessageDispatcherFactory<RECEIVER, ? extends DISPATCHER> getDispatcherFactory();
 
 }

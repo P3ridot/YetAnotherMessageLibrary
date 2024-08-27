@@ -1,7 +1,6 @@
 package dev.peri.yetanothermessageslibrary.message;
 
-import dev.peri.yetanothermessageslibrary.adventure.MiniComponent;
-import dev.peri.yetanothermessageslibrary.adventure.RawComponent;
+import dev.peri.yetanothermessageslibrary.adventure.GlobalAdventureSerializer;
 import dev.peri.yetanothermessageslibrary.message.holder.SendableHolder;
 import dev.peri.yetanothermessageslibrary.message.holder.impl.ActionBarHolder;
 import dev.peri.yetanothermessageslibrary.message.holder.impl.BossBarHolder;
@@ -19,6 +18,7 @@ import java.util.stream.Collectors;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -85,7 +85,7 @@ public class SendableMessage implements Sendable {
          * @return this builder
          */
         @Contract("_, _ -> this")
-        public Builder chat(boolean onlyConsole, @NotNull RawComponent... messages) {
+        public Builder chat(boolean onlyConsole, @NotNull Component... messages) {
             return this.addHolders(new ChatHolder(onlyConsole, messages));
         }
 
@@ -96,7 +96,7 @@ public class SendableMessage implements Sendable {
          * @return this builder
          */
         @Contract("_, -> this")
-        public Builder chat(@NotNull RawComponent... messages) {
+        public Builder chat(@NotNull Component... messages) {
             return this.chat(false, messages);
         }
 
@@ -110,7 +110,7 @@ public class SendableMessage implements Sendable {
          */
         @Contract("_, _ -> this")
         public Builder chat(boolean onlyConsole, @NotNull String... messages) {
-            return this.chat(onlyConsole, MiniComponent.of(messages));
+            return this.chat(onlyConsole, GlobalAdventureSerializer.deserializeArray(messages));
         }
 
         /**
@@ -132,7 +132,7 @@ public class SendableMessage implements Sendable {
          * @return this builder
          */
         @Contract("_, -> this")
-        public Builder actionBar(@NotNull RawComponent message) {
+        public Builder actionBar(@NotNull Component message) {
             return this.addHolders(new ActionBarHolder(message));
         }
 
@@ -145,7 +145,7 @@ public class SendableMessage implements Sendable {
          */
         @Contract("_, -> this")
         public Builder actionBar(@NotNull String message) {
-            return this.actionBar(MiniComponent.of(message));
+            return this.actionBar(GlobalAdventureSerializer.deserialize(message));
         }
 
         /**
@@ -159,7 +159,7 @@ public class SendableMessage implements Sendable {
          * @return this builder
          */
         @Contract("_, _, _, _, _ -> this")
-        public Builder title(@NotNull RawComponent title, @NotNull RawComponent subtitle, int fadeIn, int stay, int fadeOut) {
+        public Builder title(@NotNull Component title, @NotNull Component subtitle, int fadeIn, int stay, int fadeOut) {
             return this.addHolders(new TitleHolder(title, subtitle, TitleHolder.times(fadeIn, stay, fadeOut)));
         }
 
@@ -176,7 +176,7 @@ public class SendableMessage implements Sendable {
          */
         @Contract("_, _, _, _, _ -> this")
         public Builder title(@NotNull String title, @NotNull String subtitle, int fadeIn, int stay, int fadeOut) {
-            return this.title(MiniComponent.of(title), MiniComponent.of(subtitle), fadeIn, stay, fadeOut);
+            return this.title(GlobalAdventureSerializer.deserialize(title), GlobalAdventureSerializer.deserialize(subtitle), fadeIn, stay, fadeOut);
         }
 
         /**
@@ -190,7 +190,7 @@ public class SendableMessage implements Sendable {
          * @return this builder
          */
         @Contract("_, _, _, _, _, _ -> this")
-        public Builder bossBar(@NotNull RawComponent name, float progress, @NotNull BossBar.Color color, @NotNull BossBar.Overlay overlay, @NotNull Collection<BossBar.Flag> flags, int stay) {
+        public Builder bossBar(@NotNull Component name, float progress, @NotNull BossBar.Color color, @NotNull BossBar.Overlay overlay, @NotNull Collection<BossBar.Flag> flags, int stay) {
             return this.addHolders(BossBarHolder.builder(name)
                     .progress(progress)
                     .color(color)
@@ -213,7 +213,7 @@ public class SendableMessage implements Sendable {
          */
         @Contract("_, _, _, _, _, _, -> this")
         public Builder bossBar(@NotNull String name, float progress, @NotNull BossBar.Color color, @NotNull BossBar.Overlay overlay, @NotNull Collection<BossBar.Flag> flags, int stay) {
-            return this.bossBar(MiniComponent.of(name), progress, color, overlay, flags, stay);
+            return this.bossBar(GlobalAdventureSerializer.deserialize(name), progress, color, overlay, flags, stay);
         }
 
         /**

@@ -9,7 +9,9 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class VelocityMessageDispatcher<D extends VelocityMessageDispatcher<?>> extends MessageDispatcher<CommandSource, D> {
+@SuppressWarnings("unchecked")
+public class VelocityMessageDispatcher<DISPATCHER extends VelocityMessageDispatcher<DISPATCHER>>
+        extends SimpleMessageDispatcher<CommandSource, DISPATCHER> {
 
     public VelocityMessageDispatcher(
             @NotNull ViewerService<CommandSource> viewerService,
@@ -19,29 +21,56 @@ public class VelocityMessageDispatcher<D extends VelocityMessageDispatcher<?>> e
         super(viewerService, localeSupplier, messageSupplier);
     }
 
+    /**
+     * @deprecated use {@link #all(ProxyServer)} instead
+     */
+    @Deprecated
+    @Override
+    public DISPATCHER all() throws UnsupportedOperationException {
+        return super.all();
+    }
+
+    /**
+     * @deprecated use {@link #allPlayers(ProxyServer)} instead
+     */
+    @Deprecated
+    @Override
+    public DISPATCHER allPlayers() throws UnsupportedOperationException {
+        return super.allPlayers();
+    }
+
+    /**
+     * @deprecated use {@link #console(ProxyServer)} instead
+     */
+    @Deprecated
+    @Override
+    public DISPATCHER console() throws UnsupportedOperationException {
+        return super.console();
+    }
+
     @Contract("_ -> this")
-    public D broadcast(@NotNull ProxyServer proxy) {
-        this.broadcastPlayers(proxy);
+    public DISPATCHER all(@NotNull ProxyServer proxy) {
+        this.allPlayers(proxy);
         this.console(proxy);
-        return (D) this;
+        return (DISPATCHER) this;
     }
 
     @Contract("_ -> this")
-    public D broadcastPlayers(@NotNull ProxyServer proxy) {
+    public DISPATCHER allPlayers(@NotNull ProxyServer proxy) {
         proxy.getAllPlayers().forEach(this::receiver);
-        return (D) this;
+        return (DISPATCHER) this;
     }
 
     @Contract("_ -> this")
-    public D console(@NotNull ProxyServer proxy) {
+    public DISPATCHER console(@NotNull ProxyServer proxy) {
         this.receiver(proxy.getConsoleCommandSource());
-        return (D) this;
+        return (DISPATCHER) this;
     }
 
     @Contract("_ -> this")
-    public D permission(@NotNull String permission) {
+    public DISPATCHER permission(@NotNull String permission) {
         this.predicate(sender -> sender.hasPermission(permission));
-        return (D) this;
+        return (DISPATCHER) this;
     }
 
 }

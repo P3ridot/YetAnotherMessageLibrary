@@ -6,10 +6,10 @@ import java.util.function.Function;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface MessageDispatcherFactory<R, D extends MessageDispatcher<R, ? extends D>> {
+public interface MessageDispatcherFactory<RECEIVER, DISPATCHER extends MessageDispatcher<RECEIVER, ? extends DISPATCHER>> {
 
-    @NotNull D prepareDispatcher(
-            @NotNull ViewerService<R> viewerService,
+    @NotNull DISPATCHER prepareDispatcher(
+            @NotNull ViewerService<RECEIVER> viewerService,
             @NotNull Function<@Nullable Object, @NotNull Locale> localeSupplier,
             @NotNull Function<@Nullable Object, @Nullable Sendable> messageSupplier
     );

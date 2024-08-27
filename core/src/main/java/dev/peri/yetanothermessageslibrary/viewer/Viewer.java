@@ -35,7 +35,11 @@ public class Viewer {
     }
 
     public void sendChatMessage(@NotNull Collection<Component> messages) {
-        messages.forEach(this.audience::sendMessage);
+        messages.forEach(this::sendChatMessage);
+    }
+
+    public void sendChatMessage(@NotNull Component message) {
+        this.audience.sendMessage(message);
     }
 
     public void sendActionBar(@NotNull Component message) {

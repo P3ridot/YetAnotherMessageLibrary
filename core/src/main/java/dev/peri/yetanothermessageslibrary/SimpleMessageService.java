@@ -12,11 +12,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
 
-public abstract class SimpleMessageService<C extends MessageRepository> implements MessageService<C> {
+public abstract class SimpleMessageService<REPOSITORY extends MessageRepository> implements MessageService<REPOSITORY> {
 
     private Locale defaultLocale = Locale.getDefault();
     private final Collection<LocaleProvider<?>> localeProviders = new LinkedHashSet<>();
-    private final Map<Locale, C> messageRepositories = new LinkedHashMap<>();
+    private final Map<Locale, REPOSITORY> messageRepositories = new LinkedHashMap<>();
 
     @Override
     public @NotNull Locale getDefaultLocale() {
@@ -45,13 +45,13 @@ public abstract class SimpleMessageService<C extends MessageRepository> implemen
     }
 
     @Override
-    public @NotNull @Unmodifiable Map<Locale, C> getMessageRepositories() {
+    public @NotNull @Unmodifiable Map<Locale, REPOSITORY> getMessageRepositories() {
         return Collections.unmodifiableMap(this.messageRepositories);
     }
 
     @Override
-    public @NotNull C getRepository(@NotNull Locale locale) {
-        C messageRepository = this.messageRepositories.get(locale);
+    public @NotNull REPOSITORY getRepository(@NotNull Locale locale) {
+        REPOSITORY messageRepository = this.messageRepositories.get(locale);
         if (messageRepository == null) {
             // If we can't find message repository for language wariant (for e.g. en_GB) we will try to find message repository for language (for e.g. en)
             messageRepository = this.messageRepositories.get(Locale.forLanguageTag(locale.getLanguage()));
@@ -69,7 +69,7 @@ public abstract class SimpleMessageService<C extends MessageRepository> implemen
     }
 
     @Override
-    public void registerRepository(@NotNull Locale locale, @NotNull C messageRepository) {
+    public void registerRepository(@NotNull Locale locale, @NotNull REPOSITORY messageRepository) {
         Validate.notNull(locale, "Locale cannot be null");
         Validate.notNull(messageRepository, "Message repository cannot be null");
         this.messageRepositories.put(locale, messageRepository);

@@ -18,12 +18,12 @@ public class SoundHolderSerializer implements ObjectSerializer<SoundHolder> {
     @Override
     public void serialize(SoundHolder holder, SerializationData data, GenericsDeclaration generics) {
         Sound sound = holder.getSound();
-        data.add("name", sound.name().asString());
-        data.add("source", sound.source());
-        data.add("volume", sound.volume());
-        data.add("pitch", sound.pitch());
+        data.add("name", sound.name().asString(), String.class);
+        data.add("source", sound.source(), Sound.Source.class);
+        data.add("volume", sound.volume(), float.class);
+        data.add("pitch", sound.pitch(), float.class);
         if (holder.stopOtherSounds()) {
-            data.add("stop-other-sounds", true);
+            data.add("stop-other-sounds", true, boolean.class);
         }
     }
 

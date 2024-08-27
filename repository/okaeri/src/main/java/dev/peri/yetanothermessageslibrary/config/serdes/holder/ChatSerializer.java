@@ -1,6 +1,5 @@
 package dev.peri.yetanothermessageslibrary.config.serdes.holder;
 
-import dev.peri.yetanothermessageslibrary.adventure.RawComponent;
 import dev.peri.yetanothermessageslibrary.message.holder.impl.ChatHolder;
 import eu.okaeri.configs.schema.GenericsDeclaration;
 import eu.okaeri.configs.serdes.DeserializationData;
@@ -8,6 +7,7 @@ import eu.okaeri.configs.serdes.ObjectSerializer;
 import eu.okaeri.configs.serdes.SerializationData;
 import java.util.ArrayList;
 import java.util.List;
+import net.kyori.adventure.text.Component;
 
 public class ChatSerializer implements ObjectSerializer<ChatHolder> {
 
@@ -19,7 +19,7 @@ public class ChatSerializer implements ObjectSerializer<ChatHolder> {
     @Override
     public void serialize(ChatHolder holder, SerializationData data, GenericsDeclaration generics) {
         boolean sendOnlyToConsole = holder.sendOnlyToConsole();
-        List<RawComponent> messages = holder.getMessages();
+        List<Component> messages = holder.getMessages();
 
         if (!sendOnlyToConsole) {
             Object value = messages.size() == 1 ? messages.get(0) : messages;
@@ -27,25 +27,25 @@ public class ChatSerializer implements ObjectSerializer<ChatHolder> {
             return;
         }
 
-        data.add("console", true);
+        data.add("console", true, boolean.class);
         if (messages.size() == 1) {
-            data.add("message", messages.get(0));
+            data.add("message", messages.get(0), Component.class);
         } else {
-            data.addCollection("message", messages, RawComponent.class);
+            data.addCollection("message", messages, Component.class);
         }
     }
 
     @Override
     public ChatHolder deserialize(DeserializationData data, GenericsDeclaration generics) {
         boolean onlyConsole = false;
-        List<RawComponent> messages = new ArrayList<>();
+        List<Component> messages = new ArrayList<>();
 
         if (data.isValue()) {
             Object raw = data.getValueRaw();
             if (raw instanceof String) {
-                messages.add(data.getValue(RawComponent.class));
+                messages.add(data.getValue(Component.class));
             } else if (raw instanceof List) {
-                messages.addAll(data.getValueAsList(RawComponent.class));
+                messages.addAll(data.getValueAsList(Component.class));
             }
         } else {
             onlyConsole = data.containsKey("console")
@@ -54,9 +54,9 @@ public class ChatSerializer implements ObjectSerializer<ChatHolder> {
 
             Object raw = data.getRaw("message");
             if (raw instanceof String) {
-                messages.add(data.get("message", RawComponent.class));
+                messages.add(data.get("message", Component.class));
             } else if (raw instanceof List) {
-                messages.addAll(data.getAsList("message", RawComponent.class));
+                messages.addAll(data.getAsList("message", Component.class));
             }
         }
 
