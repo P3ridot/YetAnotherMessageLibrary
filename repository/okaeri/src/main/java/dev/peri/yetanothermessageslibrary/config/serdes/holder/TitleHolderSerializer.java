@@ -20,12 +20,12 @@ public class TitleHolderSerializer implements ObjectSerializer<TitleHolder> {
     @Override
     public void serialize(TitleHolder holder, SerializationData data, GenericsDeclaration generics) {
         Component title = holder.getTitle();
-        if (title.equals(Component.empty())) {
+        if (!title.equals(Component.empty())) {
             data.add("title", title, Component.class);
         }
 
         Component subtitle = holder.getSubTitle();
-        if (subtitle.equals(Component.empty())) {
+        if (!subtitle.equals(Component.empty())) {
             data.add("subtitle", subtitle, Component.class);
         }
 
